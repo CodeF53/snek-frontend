@@ -1,0 +1,105 @@
+/* Assign to parents for changing direction */
+.row { display: flex; flex-direction: row; }
+.col { display: flex; flex-direction: column; }
+/* Assign to children of row/col to center */
+.row > .centered { align-self: center; margin: auto 0px; }
+.col > .centered { align-self: center; margin: 0px auto; }
+/* Assign to empty child dive to aesthetically fill space */
+.spacer { flex:1; }
+
+/* Colors */
+.dark {
+    --background-color: #1c1c1c;
+    --background-elev-1: rgba(255, 255, 255, 0.05);
+    --background-elev-2: rgba(255, 255, 255, 0.10);
+    --accent-color: darkcyan;
+    --text-color: white;
+    --color-link: #74b6f3;
+}
+.light {
+    --background-color: white;
+    --background-elev-1: rgba(0, 0, 0, 0.05);
+    --background-elev-2: rgba(0, 0, 0, 0.10);
+    --accent-color: cyan;
+    --text-color: black;
+    --color-link: #2089ff;
+}
+/* Color Assignment to Everything */
+.App {
+    background: var(--background-color);
+    color: var(--text-color);
+}
+/* Generic Containers/Inputs/Text */
+h1,h2,h3,h4,h5,p { margin: 0; }
+.panel { margin: 0.5rem; }
+.panel, button, input {
+    background-color: var(--background-elev-1);
+    color: var(--text-color);
+    border-radius: 1rem;
+    border: 0;
+    justify-content: center;
+    padding: 0.5rem;
+}
+input:hover, button:hover {
+    background-color: var(--background-elev-2);
+}
+kbd {
+    border-radius: 0.25rem;
+    padding: 0.125rem 0.25rem;
+    border: 1px solid var(--text-color);
+}
+
+
+/* Layout */
+.App {
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.Page {
+    margin: auto;
+    max-width: 80rem;
+}
+header {
+    font-size: 1.25rem;
+}
+header > * {
+    margin-left: 0.5rem!important;
+    margin-right: 0.25rem!important;
+    height: 100%;
+}
+header button {
+    font-size: 1rem;
+    height: 2.5rem;
+}
+
+/* game */
+.game {
+    position: relative;
+}
+.snaketile {
+    position: absolute;
+    transition: all 0.2s linear;
+    /* background-color: var(--background-elev-2); */
+    border-radius: 1rem;
+}
+.snakevg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.snake-segment {
+    fill:none;
+    stroke:var(--accent-color);
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-width:2rem;
+}
+#snake-segment-head, #snake-segment-tail, #snake-segment-1 {
+    /* TODO: do something to fix the tail being weird */
+    transition: all 0.2s linear;
+}
