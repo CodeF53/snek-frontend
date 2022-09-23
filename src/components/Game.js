@@ -26,7 +26,7 @@ function Game() {
         return () => {
             clearTimeout(gameTimeoutID)
         }
-    }, [update])
+    }, [update, forceUpdate])
 
     let snake = getSnake()
     const apple = getApple()
@@ -36,28 +36,22 @@ function Game() {
     if (snake!==null){
         snake.unshift(snake[0])
         snake.push(snake[snake.length-1])
+
         let snakeBodyPaths = []
         for (let i = 0; i<snake.length-1; i++) {
             let a = snake[i]
             let b = snake[i+1]
+            let width = gUnit((i/snake.length)/2+.5)+"px"
             // start at point A
             let path = `M${sgUnit(a)}`
             if (Math.abs(a.x-b.x) <= 1 && Math.abs(a.y-b.y) <= 1) {
-                // if points are close enough together, draw a line between them
-                path += ` L${sgUnit(b)}`
+                path += ` L${sgUnit(b)}` // if points are close enough together, draw a line between them
             } else {
-                // if they are far apart (snake just wrapped around arena), dont
-                path += ` M${sgUnit(b)}`
-            }
-            let id = "snake-segment-"+(snake.length-i-2)
-            if (i === snake.length-2) {
-                id = "snake-segment-head"
-            } else if (i === 0) {
-                id = "snake-segment-tail"
+                path += ` M${sgUnit(b)}` // if they are far apart (snake just wrapped around arena), dont
             }
 
             snakeBodyPaths.push((
-                <path className="snake-segment" id={id} key={i} d={path}/>
+                <path className="snake-segment" key={i} d={path} strokeWidth={width}/>
             ))
         }
 
@@ -72,12 +66,9 @@ function Game() {
                         {Boolean(Math.round(apple.x*apple.y))? "🍎":"🍏"}
                     </div>
                 </div>
-                {/* <div className="snaketile snakehead"
+                <div className="snaketile snakehead"
                     style={{width:gUnit(1), height:gUnit(1), top:gUnit(snake[snake.length-1].y), left:gUnit(snake[snake.length-1].x)}}
-                /> */}
-                {snake.map((part)=>(<div className="snaketile"
-                    style={{width:gUnit(1), height:gUnit(1), top:gUnit(part.y), left:gUnit(part.x)}}
-                />))}
+                />
                 {snakeBody}
             </div>
         )

@@ -20,7 +20,7 @@
     --background-color: white;
     --background-elev-1: rgba(0, 0, 0, 0.05);
     --background-elev-2: rgba(0, 0, 0, 0.10);
-    --accent-color: cyan;
+    --accent-color: rgb(0, 226, 226);
     --text-color: black;
     --color-link: #2089ff;
 }
@@ -81,7 +81,7 @@ header button {
 }
 .snaketile {
     position: absolute;
-    transition: all 0.2s linear;
+    /* transition: all 0.2s linear; */
     /* background-color: var(--background-elev-2); */
     border-radius: 1rem;
 }
@@ -97,9 +97,13 @@ header button {
     stroke:var(--accent-color);
     stroke-linecap:round;
     stroke-linejoin:round;
-    stroke-width:2rem;
+    /* stroke-width:2rem; */
+    transition: all 0.2s linear;
+}
+.snakehead {
+    background: var(--accent-color);
+    transition: all 0.2s linear;
 }
 #snake-segment-head, #snake-segment-tail, #snake-segment-1 {
-    /* TODO: do something to fix the tail being weird */
     transition: all 0.2s linear;
 }
