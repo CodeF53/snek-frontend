@@ -63,7 +63,7 @@ function Game() {
             <div className="game" style={{width:GameScreenSize, height:GameScreenSize}}>
                 <div className="snaketile" style={{width:gUnit(1), height:gUnit(1), top:gUnit(apple.y), left:gUnit(apple.x)}}>
                     <div className="apple" style={{fontSize:gUnit(1.25),marginTop:gUnit(-0.25),marginLeft:gUnit(-0.125)}}>
-                        {Boolean(Math.round(apple.x*apple.y))? "🍎":"🍏"}
+                        {Boolean(Math.round((apple.x+apple.y)%2))? "🍎":"🍏"}
                     </div>
                 </div>
                 <div className="snaketile snakehead"
