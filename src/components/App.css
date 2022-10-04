@@ -24,6 +24,7 @@
   --text-color: black;
   --color-link: #2089ff;
 }
+a { color: var(--color-link); }
 /* Color Assignment to Everything */
 .App {
   background: var(--background-color);
@@ -114,4 +115,12 @@ header button {
   width: fit-content;
   height: fit-content;
   backdrop-filter: blur(1rem);
+}
+
+/* login/signup forum */
+#log-form {
+  padding: 1rem;
+}
+#log-form > input, #log-form > button {
+  margin: 0.25rem 0;
 }
