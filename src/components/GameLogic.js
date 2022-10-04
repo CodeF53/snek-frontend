@@ -26,14 +26,16 @@ const [getFacing, setFacing] = gameVarFunc("snake-facing")
 const [getSnake, setSnake] = gameVarFunc("snake-snake")
 const [getApple, setApple] = gameVarFunc("snake-apple")
 const [getScore, setScore] = gameVarFunc("snake-score")
-export {getSnake, getApple, getScore}
-
+const [getGameOver, setGameOver] = gameVarFunc(true)
 function setGameVars() {
   setFacing("")
   setSnake([{x:parseInt(GameSize/2), y:parseInt(GameSize/2)}])
   setApple({x:rand(GameSize), y:rand(GameSize)})
+  setGameOver(false)
   setScore(0)
 }
+export {getSnake, getApple, getScore, getGameOver, setGameVars}
+
 // change snake facing direction from keypress
 // dont let snake instantly die by turning back on itself 180 degrees
 function handleGameInput({code}) {
@@ -81,7 +83,7 @@ export function gameStep() {
   let apple = getApple()
   let score = getScore()
 
-  if (facing !== "") {
+  if (facing !== "" && !getGameOver()) {
     let oldHead = snake[snake.length-1]
     snake[snake.length-1]["facing"] = facing
     switch (facing) {
@@ -128,6 +130,7 @@ export function gameStep() {
       if (headPos.x === snake[i].x && headPos.y === snake[i].y) {
         // die
         setFacing("")
+        setGameOver(true)
       }
     }
   }

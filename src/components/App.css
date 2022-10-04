@@ -107,3 +107,11 @@ header button {
 #snake-segment-head, #snake-segment-tail, #snake-segment-1 {
   transition: all 0.2s linear;
 }
+
+#game-over {
+  margin: auto;
+  align-self: center;
+  width: fit-content;
+  height: fit-content;
+  backdrop-filter: blur(1rem);
+}

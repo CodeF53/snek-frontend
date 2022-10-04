@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { cleanupGame, gameStep, initGame } from "./GameLogic"
-import { getSnake, getApple, getScore } from "./GameLogic"
+import { getSnake, getApple, getScore, getGameOver, setGameVars } from "./GameLogic"
 
 //TODO: adjust so it is completely dynamic
 const GameScreenSize = "50rem"
@@ -31,6 +31,20 @@ function Game() {
   let snake = getSnake()
   const apple = getApple()
   const score = getScore()
+
+  let gameOverNode = ( <div></div> )
+  if (getGameOver()) {
+    gameOverNode = (
+      <div style={{top:0,left:0,bottom:0,right:0, position:"absolute"}} className="col">
+        <div id="game-over" className="panel col">
+          <h1 className="centered">gam ova!</h1>
+          <span><strong>score: </strong>{score}</span>
+
+          <button onClick={setGameVars}>plai agan</button>
+        </div>
+      </div>
+    )
+  }
 
   let gameNode
   if (snake!==null){
@@ -74,8 +88,12 @@ function Game() {
     )
   }
   return (
-    <div className="panel" style={{width:"fit-content"}}>
-      {gameNode}
+    <div className="col">
+      <div className="panel centered" style={{width:"fit-content", position:"relative"}}>
+        {gameNode}
+
+        {gameOverNode}
+      </div>
     </div>
   )
 }
