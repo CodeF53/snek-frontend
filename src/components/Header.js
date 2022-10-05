@@ -1,8 +1,23 @@
 import lightModeIcon from "../assets/sun.svg"
 import darkModeIcon from "../assets/moon.svg"
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Header({isLightMode,setIsLightMode}) {
+function Header({isLightMode,setIsLightMode, userObject, setUserObject}) {
+  let userarea = (
+    <div className="row">
+      <Link to="/signup"><button>Sign Up</button></Link>
+      <Link to="/login"><button>Log In</button></Link>
+    </div>
+  )
+
+  if (userObject !== null) {
+    userarea = (
+      <div className="row">
+        <button onClick={()=>{setUserObject(null)}}>Sign Out</button>
+      </div>
+    )
+  }
+
   return (
     <header className="row panel">
       <strong className="centered">snek</strong>
@@ -18,9 +33,7 @@ function Header({isLightMode,setIsLightMode}) {
         <img src={isLightMode? darkModeIcon : lightModeIcon} alt={isLightMode? "a moon" : "a sun"}></img>
       </button>
 
-      {/* TODO: user login stuff, if they are logged in, show pfp and log out */}
-      <Link to="/signup"><button>Sign Up</button></Link>
-      <Link to="/login"><button>Log In</button></Link>
+      {userarea}
     </header>
   )
 }
