@@ -66,7 +66,7 @@ kbd {
 header {
   font-size: 1.25rem;
 }
-header > * {
+header > *, .userArea > * {
   margin-left: 0.5rem!important;
   margin-right: 0.25rem!important;
   height: 100%;
@@ -103,6 +103,8 @@ header button {
 }
 .snakehead {
   background: var(--accent-color);
+}
+.snakeheadlerp {
   transition: all 0.2s linear;
 }
 #snake-segment-head, #snake-segment-tail, #snake-segment-1 {

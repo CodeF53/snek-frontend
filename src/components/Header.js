@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Header({isLightMode,setIsLightMode, userObject, setUserObject}) {
   let userarea = (
-    <div className="row">
+    <div className="userArea row">
       <Link to="/signup"><button>Sign Up</button></Link>
       <Link to="/login"><button>Log In</button></Link>
     </div>
@@ -12,7 +12,7 @@ function Header({isLightMode,setIsLightMode, userObject, setUserObject}) {
 
   if (userObject !== null) {
     userarea = (
-      <div className="row">
+      <div className="userArea row">
         <button onClick={()=>{setUserObject(null)}}>Sign Out</button>
       </div>
     )
