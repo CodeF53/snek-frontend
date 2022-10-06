@@ -23,6 +23,7 @@ function gameVarFunc(varName) {
 
 // Game Vars
 const [getFacing, setFacing] = gameVarFunc("snake-facing")
+const [getFacingQueue, setFacingQueue] = gameVarFunc("snake-facing-queue")
 const [getOldHead, setOldHead] = gameVarFunc("snake-old-head")
 const [getSnake, setSnake] = gameVarFunc("snake-snake")
 const [getApple, setApple] = gameVarFunc("snake-apple")
@@ -40,30 +41,32 @@ export {getSnake, getApple, getScore, getGameOver, setGameVars, getOldHead}
 // change snake facing direction from keypress
 // dont let snake instantly die by turning back on itself 180 degrees
 function handleGameInput({code}) {
+  let facingQueue = getFacingQueue()
   const facing = getFacing()
   switch(code) {
     case "KeyW":
     case "ArrowUp":
-      if (facing !== "down")
-        setFacing("up")
+      if (facingQueue.length!==0 || (facingQueue.length===0 && facing !== "down"))
+        facingQueue.push("up")
       break;
     case "KeyA":
     case "ArrowLeft":
-      if (facing !== "right")
-        setFacing("left")
+      if (facingQueue.length!==0 || (facingQueue.length===0 && facing !== "right"))
+        facingQueue.push("left")
       break;
     case "KeyD":
     case "ArrowRight":
-      if (facing !== "left")
-        setFacing("right")
+      if (facingQueue.length!==0 || (facingQueue.length===0 && facing !== "left"))
+        facingQueue.push("right")
       break;
     case "KeyS":
     case "ArrowDown":
-      if (facing !== "up")
-        setFacing("down")
+      if (facingQueue.length!==0 || (facingQueue.length===0 && facing !== "up"))
+        facingQueue.push("down")
       break;
     default: break; // linter gets mad without default case
   }
+  setFacingQueue(facingQueue)
 }
 
 // adds input event listener and game vars
@@ -80,6 +83,13 @@ export function cleanupGame() {
 
 export function gameStep() {
   let facing = getFacing()
+  let facingQueue = getFacingQueue()
+  if (facingQueue.length>0) {
+    facing = facingQueue.shift()
+    setFacing(facing)
+    setFacingQueue(facingQueue)
+  }
+
   let snake = getSnake()
   let apple = getApple()
   let score = getScore()
