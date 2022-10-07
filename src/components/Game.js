@@ -51,7 +51,10 @@ function Game({userObject}) {
     const snakeBody = <svg className="snakevg"> {snakeBodyPaths} </svg>
 
     const head = snake[snake.length-1]
-    const shouldHeadLerp = Math.abs(head.x-getOldHead().x) <= 1 && Math.abs(head.y-getOldHead().y) <= 1
+    let shouldHeadLerp = true;
+    if (getOldHead() !== null) {
+      shouldHeadLerp =Math.abs(head.x-getOldHead().x) <= 1 && Math.abs(head.y-getOldHead().y) <= 1
+    }
 
     gameNode = <div className="game" style={{width:GameScreenSize, height:GameScreenSize}}>
       <div className="snaketile" style={{width:gUnit(1), height:gUnit(1), top:gUnit(apple.y), left:gUnit(apple.x)}}>

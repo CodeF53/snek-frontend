@@ -31,6 +31,7 @@ const [getScore, setScore] = gameVarFunc("snake-score")
 const [getGameOver, setGameOver] = gameVarFunc(true)
 function setGameVars() {
   setFacing("")
+  setFacingQueue([])
   setSnake([{x:parseInt(GameSize/2), y:parseInt(GameSize/2)}])
   setApple({x:rand(GameSize), y:rand(GameSize)})
   setGameOver(false)
@@ -43,26 +44,42 @@ export {getSnake, getApple, getScore, getGameOver, setGameVars, getOldHead}
 function handleGameInput({code}) {
   let facingQueue = getFacingQueue()
   const facing = getFacing()
+  const noFacingConflicts = (asda) => {
+    if (facingQueue.length===0) {
+      switch (facing) {
+        case "up":    return asda !== "down"
+        case "down":  return asda !== "up"
+        case "left":  return asda !== "right"
+        case "right": return asda !== "left"
+        default: return true
+      }
+    } else {
+      switch (facingQueue[facingQueue.length-1]) {
+        case "up":    return asda !== "down"
+        case "down":  return asda !== "up"
+        case "left":  return asda !== "right"
+        case "right": return asda !== "left"
+        default: return true // linter gets mad without default case
+      }
+    }
+  }
+
   switch(code) {
-    case "KeyW":
-    case "ArrowUp":
-      if (facingQueue.length!==0 || (facingQueue.length===0 && facing !== "down"))
+    case "KeyW": case "ArrowUp":
+      if (noFacingConflicts("up"))
         facingQueue.push("up")
       break;
-    case "KeyA":
-    case "ArrowLeft":
-      if (facingQueue.length!==0 || (facingQueue.length===0 && facing !== "right"))
+    case "KeyA": case "ArrowLeft":
+      if (noFacingConflicts("left"))
         facingQueue.push("left")
       break;
-    case "KeyD":
-    case "ArrowRight":
-      if (facingQueue.length!==0 || (facingQueue.length===0 && facing !== "left"))
-        facingQueue.push("right")
+    case "KeyD": case "ArrowRight":
+      if (noFacingConflicts("right"))
+      facingQueue.push("right")
       break;
-    case "KeyS":
-    case "ArrowDown":
-      if (facingQueue.length!==0 || (facingQueue.length===0 && facing !== "up"))
-        facingQueue.push("down")
+    case "KeyS": case "ArrowDown":
+      if (noFacingConflicts("down"))
+      facingQueue.push("down")
       break;
     default: break; // linter gets mad without default case
   }
