@@ -98,7 +98,6 @@ header button {
   stroke:var(--accent-color);
   stroke-linecap:round;
   stroke-linejoin:round;
-  /* stroke-width:2rem; */
   transition: all 0.2s linear;
 }
 .snakehead {
@@ -109,6 +108,19 @@ header button {
 }
 #snake-segment-head, #snake-segment-tail, #snake-segment-1 {
   transition: all 0.2s linear;
+}
+.snakehead > div {
+  position: absolute;
+  transition: all 0.2s linear;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.snakeEye {
+  background-color: black;
+  border-radius: 1000px;
+  position: absolute;
 }
 
 #game-over {

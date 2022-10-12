@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { cleanupGame, gameStep, initGame } from "./GameLogic"
+import { cleanupGame, gameStep, getFacing, initGame } from "./GameLogic"
 import { getSnake, getApple, getScore, getGameOver, setGameVars, getOldHead } from "./GameLogic"
 
 //TODO: adjust so it is completely dynamic
@@ -56,20 +56,32 @@ function Game({userObject}) {
       shouldHeadLerp =Math.abs(head.x-getOldHead().x) <= 1 && Math.abs(head.y-getOldHead().y) <= 1
     }
 
+    let snakeEyes = <div style={(()=>{switch (getFacing()) {
+      case "up":    return { transform: "rotate(0deg)" }
+      case "left":  return { transform: "rotate(-90deg)" }
+      case "right": return { transform: "rotate(90deg)" }
+      case "down":  return { transform: "rotate(180deg)" }
+      default: return { display: "none" }
+    }})()}>
+      <div className="snakeEye" style={{width:gUnit(.2), height:gUnit(.2), top:gUnit(.1), left:gUnit(.1)}}/>
+      <div className="snakeEye" style={{width:gUnit(.2), height:gUnit(.2), top:gUnit(.1), left:gUnit(.7)}}/>
+    </div>
+
     gameNode = <div className="game" style={{width:GameScreenSize, height:GameScreenSize}}>
       <div className="snaketile" style={{width:gUnit(1), height:gUnit(1), top:gUnit(apple.y), left:gUnit(apple.x)}}>
         <div className="apple" style={{fontSize:gUnit(1.25),marginTop:gUnit(-0.25),marginLeft:gUnit(-0.125)}}>
           {Boolean(Math.round((apple.x+apple.y)%2))? "🍎":"🍏"}
         </div>
       </div>
-      <div className={`snaketile snakehead ${shouldHeadLerp?"snakeheadlerp":""}`}
-        style={{width:gUnit(1), height:gUnit(1), top:gUnit(snake[snake.length-1].y), left:gUnit(snake[snake.length-1].x)}}
-      />
       {snakeBody}
+      <div className={`snaketile snakehead ${shouldHeadLerp?"snakeheadlerp":""}`}
+        style={{width:gUnit(1), height:gUnit(1), top:gUnit(head.y), left:gUnit(head.x)}}>
+          {snakeEyes}
+      </div>
     </div>
   }
 
-  let gameOverNode = ( <div></div> )
+  let gameOverNode = <div/>
   if (getGameOver()) {
     gameOverNode = (
       <div style={{top:0,left:0,bottom:0,right:0, position:"absolute"}} className="col">

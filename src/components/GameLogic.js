@@ -37,7 +37,7 @@ function setGameVars() {
   setGameOver(false)
   setScore(0)
 }
-export {getSnake, getApple, getScore, getGameOver, setGameVars, getOldHead}
+export {getSnake, getApple, getScore, getGameOver, setGameVars, getOldHead, getFacing}
 
 // change snake facing direction from keypress
 // dont let snake instantly die by turning back on itself 180 degrees
@@ -157,9 +157,7 @@ export function gameStep() {
     // check for overlaps
     for (let i = 0; i < snake.length-1; i++) {
       if (headPos.x === snake[i].x && headPos.y === snake[i].y) {
-        // die
-        setFacing("")
-        setGameOver(true)
+        setGameOver(true) // die
       }
     }
   }
